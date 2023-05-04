@@ -1,0 +1,233 @@
+Pandas
+파이썬에서 실행되는 분석 라이브러리
+
+import pandas as pd
+
+1. Series
+1차원 데이터(정수, 실수 등등)
+
+Series 객체 생성
+예) 1월부터 4월까지 평균 온도 데이터(-20,-10, 10, 20)
+
+temp=pd. Series([-20,-10, 10, 20])
+temp
+
+temp[0] #1월 온도
+
+temp[2]
+
+Series 객체 생성 (Index 지정)
+temp = pd. Series([-20,-10,10,20], index=['Jan','Fed','Mar','Apr'])
+temp
+temp['Jan']
+
+temp['Apr']
+
+2. DataFrame
+2차원 데이터(Series 들의 모음)
+
+Data 준비
+사전 (dict) 자료구조를 통해 생성 예) 슬램덩크 주요 인물 8명에 대한 데이터
+
+data = {
+    '이름' : ['채치수', '정대만', '송태섭', '서태웅', '강백호', '변덕규', '황태산', '윤대협'],
+    '학교' : ['북산고', '북산고', '북산고', '북산고', '북산고', '능남고', '능남고', '능남고'],
+    '키' : [197, 184, 168, 187, 188, 202, 188, 190],
+    '국어' : [90, 40, 80, 40, 15, 80, 55, 100],
+    '영어' : [85, 35, 75, 60, 20, 100, 65, 85],
+    '수학' : [100, 50, 70, 70, 10, 95, 45, 90],
+    '과학' : [95, 55, 80, 75, 35, 85, 40, 95],
+    '사회' : [85, 25, 75, 80, 10, 80, 35, 95],
+    'SW특기' : ['Python', 'Java', 'Javascript', '', '', 'C', 'PYTHON', 'C#']
+}
+data
+
+data['이름']
+
+data['키']
+
+2.1. DataFrame 객체생성
+import pandas as pd
+df= pd. DataFrame(data)
+df
+
+
+2.2. 데이터 접근
+df['이름']
+
+df['키']
+
+df[['이름','키']]
+
+2.3. DataFrame 객체 생성(Index 지정)
+df=pd.DataFrame(data, index=['1번', '2번', '3번','4번','5번','6번','7번','8번'])
+df
+
+2.4. DataFrame 객체 생성(Column 지정)
+data 중에서 원하는 column만 선택하거나, 순서 변경 가능
+
+df=pd.DataFrame(data, columns=['이름','학교', '키'])
+df
+
+3. Index
+데이터에 접근할 수 있는 주소 값
+
+import pandas as pd
+data = {
+    '이름' : ['채치수', '정대만', '송태섭', '서태웅', '강백호', '변덕규', '황태산', '윤대협'],
+    '학교' : ['북산고', '북산고', '북산고', '북산고', '북산고', '능남고', '능남고', '능남고'],
+    '키' : [197, 184, 168, 187, 188, 202, 188, 190],
+    '국어' : [90, 40, 80, 40, 15, 80, 55, 100],
+    '영어' : [85, 35, 75, 60, 20, 100, 65, 85],
+    '수학' : [100, 50, 70, 70, 10, 95, 45, 90],
+    '과학' : [95, 55, 80, 75, 35, 85, 40, 95],
+    '사회' : [85, 25, 75, 80, 10, 80, 35, 95],
+    'SW특기' : ['Python', 'Java', 'Javascript', '', '', 'C', 'PYTHON', 'C#']
+}
+df=pd.DataFrame(data, index=['1번', '2번', '3번','4번','5번','6번','7번','8번'])
+df
+
+df.index
+
+3.1. Index 이름 설정
+df.index.name='지원번호'
+df
+
+3.2. Index 초기화
+df.reset_index()
+
+df.reset_index(drop=True) #원해 쓰던 '지원번호' 인덱스 삭제
+
+df
+
+df.reset_index(drop=True, inplace=True)  #실제 데이터에 바로 반영
+df
+
+3.3. Index 설정
+지정한 column으로 index를 설정
+
+df.set_index('이름')
+
+df
+
+df.set_index('이름',  inplace=True)
+df
+
+3.4. Index 정렬
+index를 기준으로 오름차순, 내림차순 정렬
+
+df.sort_index() #인덱스로 오름차순 정렬
+
+df.sort_index(ascending=False) #내림차순으로 정렬
+
+4. 파일 저장 및 열기
+DataFrame 객체를 excel, csv, txt등 형태의 파일로 저장 및 열기
+
+import pandas as pd
+data = {
+    '이름' : ['채치수', '정대만', '송태섭', '서태웅', '강백호', '변덕규', '황태산', '윤대협'],
+    '학교' : ['북산고', '북산고', '북산고', '북산고', '북산고', '능남고', '능남고', '능남고'],
+    '키' : [197, 184, 168, 187, 188, 202, 188, 190],
+    '국어' : [90, 40, 80, 40, 15, 80, 55, 100],
+    '영어' : [85, 35, 75, 60, 20, 100, 65, 85],
+    '수학' : [100, 50, 70, 70, 10, 95, 45, 90],
+    '과학' : [95, 55, 80, 75, 35, 85, 40, 95],
+    '사회' : [85, 25, 75, 80, 10, 80, 35, 95],
+    'SW특기' : ['Python', 'Java', 'Javascript', '', '', 'C', 'PYTHON', 'C#']
+}
+df=pd.DataFrame(data, index=['1번', '2번', '3번','4번','5번','6번','7번','8번'])
+df.index.name='지원번호'
+df
+
+4.1. 저장하기
+CSV 파일로 저장
+df.to_csv('score.csv', encoding='utf-8-sig')
+df.to_csv('score.csv', encoding='utf-8-sig', index=False)
+텍스트 파일로 저장
+df.to_csv('score.txt', sep='\t') #tab으로 구분된 텍스트 파일
+엑셀 파일로 저장
+df.to_excel('score.xlsx')
+
+4.2. 열기
+csv 파일 열기
+df=pd.read_csv('score.csv')
+df
+
+df=pd.read_csv('score.csv', skiprows=1) #지정된 갯수 만틈의 row를 건너뜀
+df
+
+df=pd.read_csv('score.csv', skiprows=[1,3,5]) #1,3,5 row는 제외(row 0부터 시작)
+df
+
+df=pd.read_csv('score.csv', nrows=4) #지정된 갯수 만큼 row만 가져옴
+df
+
+df=pd.read_csv('score.csv', skiprows=2, nrows=4) #처음 2 row무시, 이후에 4 row 가져옴
+df
+
+4.3. 텍스트 파일 열기
+df=pd.read_csv('score.txt', sep='\t')
+df
+
+df=pd.read_csv('score.txt', sep='\t', index_col='지원번호')
+df
+
+df=pd.read_csv('score.txt', sep='\t')
+df.set_index('지원번호', inplace=True)
+df
+
+4.4. 엑셀 파일 열기
+df=pd.read_excel('score.xlsx')
+df
+
+df=pd.read_excel('score.xlsx', index_col='지원번호')
+df
+
+5. 데이터 확인
+import pandas as pd
+df=pd.read_excel('score.xlsx', index_col='지원번호')
+df
+
+DataFrame 확인
+계산 가능한 데이터에 대해 Column 별로 데이터의 개수, 평균, 표준편차, 최소/최대값 등의 정보를 보여줌
+
+df.describe()
+키	국어	영어	수학	과학	사회
+
+df.info()
+
+df.head() #처음 5개의 row를 가져옴
+
+df.head(7) #처음 7개의 row를 가져옴
+
+df.tail() #마지막 5개 row를 가져옴
+
+df.tail(3) #마지막 3개 row를 가져옴
+
+df.values
+
+df.index
+
+df.columns
+
+df.shape #row, column개수
+
+5.1. Seires 확인
+df['키'].describe()
+
+df['키'].min()
+
+df['키'].max()
+
+df['키'].mean()
+
+df['키'].sum()
+
+df['키'].nlargest(3) #키 큰 사람 순서대로 3명 데이터
+
+df['SW특기'].count()
+
+df['학교'].unique()
+
+df['학교'].nunique()
+
